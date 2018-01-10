@@ -12,6 +12,16 @@ component accessors=true output=false persistent=false {
   property lastName;
   property wellnessUserTypeID;
 
+  /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  ██ ███    ██ ██ ████████
+  ██ ████   ██ ██    ██
+  ██ ██ ██  ██ ██    ██
+  ██ ██  ██ ██ ██    ██
+  ██ ██   ████ ██    ██
+
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
   public component function init () {
     if (1 == arrayLen(arguments) && IsStruct(arguments[1])) {
       var row = arguments[1];

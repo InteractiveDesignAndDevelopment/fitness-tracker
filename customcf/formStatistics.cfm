@@ -5,6 +5,7 @@
 </cfscript>
 
 <cfoutput>
+
   <form action="./view-statistics-by-user.cfm" method="post">
     Email address
     <select name="WellnessUserID">
