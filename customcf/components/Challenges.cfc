@@ -1,3 +1,9 @@
+/**
+ * Challenges.cfc
+ *
+ * @author Todd Sayre
+ * @date 2018-01-10
+ **/
 component Challenges {
   public function all() {
     var results = queryNew('');
