@@ -4,7 +4,7 @@
  * @author Todd Sayre
  * @date 2018-01-10
  **/
-component Challenges {
+component accessors=true output=false persistent=false {
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -33,12 +33,26 @@ component Challenges {
   public array function all() {
     var results = queryNew('');
     var sql = '';
-    sql &= '   SELECT ID,';
-    sql &= '          Name';
+    sql &= '   SELECT *';
     sql &= '     FROM Challenge';
     sql &= ' ORDER BY Name';
     results = queryExecute(sql, {}, { datasource = 'dsnWellness' });
-    return results;
+    return challengesQuerytoChallengeArray(results);
+  }
+
+  public component function current() {
+    var results = queryNew('');
+    var sql = '';
+    sql &= ' SELECT *';
+    sql &= '   FROM Challenge';
+    sql &= '  WHERE isCurrent = ''1''';
+    results = queryExecute(sql, {}, { datasource = 'dsnWellness' });
+    arr = challengesQuerytoChallengeArray(results);
+    if (1 <= ArrayLen(arr)) {
+      return arr[1];
+    } else {
+      return;
+    }
   }
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

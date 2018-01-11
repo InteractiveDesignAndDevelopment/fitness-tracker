@@ -4,7 +4,7 @@
  * @author Todd Sayre
  * @date 2018-01-10
  **/
-component Challenge {
+component accessors=true output=false persistent=false {
   property id;
   property name;
 
@@ -42,6 +42,10 @@ component Challenge {
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
   public array function activities () {
+    return new Activities().find(where = { challengeID = getID() });
+  }
 
+  public array function activityTypes () {
+    return new ActivityTypes().find(where = { challengeID = getID() })
   }
 }

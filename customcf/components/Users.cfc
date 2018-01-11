@@ -4,7 +4,7 @@
  * @author Todd Sayre
  * @date 2018-01-10
  **/
-component Users {
+component Users accessors=true output=false persistent=false {
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
