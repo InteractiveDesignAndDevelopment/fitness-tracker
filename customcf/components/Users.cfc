@@ -6,6 +6,8 @@
  **/
 component Users accessors=true output=false persistent=false {
 
+  this.usersArray = [];
+
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
   ██ ███    ██ ██ ████████
@@ -30,16 +32,32 @@ component Users accessors=true output=false persistent=false {
 
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
-  public function all() {
+  public function find() {
+    var params = {};
     var results = queryNew('');
     var sql = '';
-    sql &= '   SELECT ID,';
-    sql &= '          Email';
-    sql &= '     FROM WellnessUser';
-    sql &= ' ORDER BY Email';
-    results = queryExecute(sql, {}, { datasource = 'dsnWellness' });
 
-    return usersQuerytoUserArray(results);
+    savecontent variable='sql' {
+      WriteOutput(' SELECT WellnessUser.*');
+      WriteOutput('   FROM WellnessUser');
+      if (StructKeyExists(arguments, 'where')) {
+        WriteOutput(' WHERE 1=1');
+        if (StructKeyExists(arguments.where, 'email')) {
+          WriteOutput(' AND WellnessUser.email = :email');
+          params.email = arguments.where.email;
+        }
+      }
+      WriteOutput(' ORDER BY Email');
+    }
+
+    results = queryExecute(sql, params, { datasource = 'dsnWellness' });
+
+    this.usersArray = usersQuerytoUserArray(results);
+    return this;
+  }
+
+  public function toArray() {
+    return this.usersArray;
   }
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

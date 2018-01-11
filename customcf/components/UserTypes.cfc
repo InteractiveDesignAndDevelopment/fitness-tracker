@@ -1,10 +1,12 @@
 /**
- * ActivityTypes.cfc
+ * Users.cfc
  *
  * @author Todd Sayre
- * @date 2018-01-10
+ * @date 2018-01-11
  **/
-component accessors=true output=false persistent=false {
+component Users accessors=true output=false persistent=false {
+
+  this.userTypesArray = [];
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -30,41 +32,38 @@ component accessors=true output=false persistent=false {
 
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
-  public function all() {
-    var results = queryNew('');
-    var sql = '';
-    sql &= '   SELECT *';
-    sql &= '     FROM ActivityType';
-    sql &= ' ORDER BY Name';
-    results = queryExecute(sql, {}, { datasource = 'dsnWellness' });
-    return activityTypesQuerytoActivityTypeArray(results);
-  }
+  public component function find() {
 
-  public function find () {
     var params = {};
     var results = queryNew('');
     var sql = '';
 
     savecontent variable='sql' {
-      WriteOutput(' SELECT ActivityType.*');
-      WriteOutput('   FROM ActivityType');
+      WriteOutput('   SELECT WellnessUserType.*');
+      WriteOutput('     FROM WellnessUserType');
       if (StructKeyExists(arguments, 'where')) {
         WriteOutput(' WHERE 1=1');
-        if (StructKeyExists(arguments.where, 'challengeID')) {
-          WriteOutput('    AND ActivityType.ID IN (');
-          WriteOutput(' SELECT DISTINCT Activity.TypeID');
-          WriteOutput('   FROM Activity');
-          WriteOutput('  WHERE Activity.ChallengeID = :challengeID');
-          WriteOutput('    AND Activity.TypeID = ActivityType.ID');
-          WriteOutput(' )');
-          params.challengeID = arguments.where.challengeID;
+        if (StructKeyExists(arguments.where, 'id')) {
+          WriteOutput(' AND WellnessUserType.id = :id');
+          params.id = arguments.where.id;
         }
       }
+      WriteOutput(' ORDER BY WellnessUserType.name');
     }
+    // WriteDump(sql);
 
     results = queryExecute(sql, params, { datasource = 'dsnWellness' });
 
-    return activityTypesQuerytoActivityTypeArray(results);
+    this.userTypesArray = userTypesQueryToUserTypeArray(results);
+    return this;
+  }
+
+  public component function first() {
+    return this.toArray()[1];
+  }
+
+  public array function toArray() {
+    return this.userTypesArray;
   }
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -77,11 +76,11 @@ component accessors=true output=false persistent=false {
 
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
-  private array function activityTypesQuerytoActivityTypeArray(required query activityTypesQuery) {
-    var activityTypeArray = [];
-    for (row in activityTypesQuery) {
-      ArrayAppend(activityTypeArray, new ActivityType(row));
+  private array function userTypesQueryToUserTypeArray(required query userTypesQuery) {
+    var userTypeArray = [];
+    for (row in userTypesQuery) {
+      ArrayAppend(userTypeArray, new UserType(row));
     }
-    return activityTypeArray;
+    return userTypeArray;
   }
 }

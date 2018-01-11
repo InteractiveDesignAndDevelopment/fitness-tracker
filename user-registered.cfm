@@ -9,9 +9,9 @@
     <cfinclude template="./includes/body-top.cfm">
 
     <h1>Register User</h1>
-    <h2>Includes <em>formWellnessUser.cfm</em></h2>
+    <h2>Includes <em>insertWellnessUser.cfm</em></h2>
 
-    <cfinclude template="./customcf/formWellnessUser.cfm">
+    <cfinclude template="./customcf/insertWellnessUser.cfm">
 
     <cfinclude template="./includes/body-bottom.cfm">
 

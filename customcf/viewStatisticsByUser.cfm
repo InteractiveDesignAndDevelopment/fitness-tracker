@@ -1,5 +1,13 @@
-<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.css"
+  integrity="sha256-Te9+aTaL9j0U5PzLhtAHt+SXlgIT8KT9VkyOZn68hak="
+  crossorigin="anonymous" />
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.0/chartist.min.js"
+  integrity="sha256-UzffRueYhyZDw8Cj39UCnnggvBfa1fPcDQ0auvCbvCc="
+  crossorigin="anonymous"></script>
 
 <style>
 .ct-series-a .ct-bar {
@@ -75,19 +83,6 @@ User: #Firstname# #Lastname#<br />
 Challenge: #Name#<br />
 </cfoutput>
 
-<!---
-<cfoutput query="getActivityType">
-Date, #Name#:
-</cfoutput>
-</p>
-<ul>
-<cfoutput query="getActivitiesByUserID">
-<li>#ActivityMonthDay#, #Measure#</li>
-</cfoutput>
-</ul>
-<br />
---->
-
 <cfoutput query="getUser">
 Statistics for #Firstname# #Lastname#:<br />
 </cfoutput>
@@ -114,24 +109,6 @@ Total: #NumberFormat(SumOfMeasures, ",")#
   ORDER BY Total DESC
 </CFQUERY>
 
-<!---
-  <cfoutput query="getActivitiesByUserID">
-  '#ActivityMonthDay#',
-  </cfoutput>
-  <cfoutput query="getActivitiesByUserID">
-  #Measure#,
-  </cfoutput>
-
---->
-<!---
-  <cfoutput query="getTotalsByFirstname">
-  '#Firstname#',
-  </cfoutput>
-  <cfoutput query="getTotalsByFirstname">
-  #Total#,
-  </cfoutput>
---->
-
 <CFQUERY NAME="getSumOfActivities" DATASOURCE="dsnWellness">
   SELECT
     SUM(Measure) AS SumOfMeasuresAll
@@ -141,7 +118,7 @@ Total: #NumberFormat(SumOfMeasures, ",")#
 
 <br />
 <p>
-Statistics for all of Mercer (NOTE: data entries outside the competition dates of 1/29-2/5 were deleted):<br />
+Statistics for all of Mercer:<br />
 <cfoutput query="getSumOfActivities">
 Total: #NumberFormat(SumOfMeasuresAll, ",")#
 </cfoutput>
@@ -194,32 +171,3 @@ new Chartist.Bar('#chart2', {
   }
 });
 </script>
-
-<!---
-<cfchart
-     format="png"
-     xaxistitle="Date of activity"
-     yaxistitle="Measure of activity">
-  <cfchartseries
-         type="bar"
-         query="getActivitiesByUserID"
-         itemcolumn="ActivityMonthDay"
-         valuecolumn="Measure">
-  </cfchartseries>
-</cfchart>
-<br />
-<br />
---->
-<!---
-<cfchart
-     format="png"
-     xaxistitle="User"
-     yaxistitle="Measure of activity">
-  <cfchartseries
-         type="bar"
-         query="getTotalsByFirstname"
-         itemcolumn="Firstname"
-         valuecolumn="Total">
-  </cfchartseries>
-</cfchart>
---->

@@ -1,8 +1,8 @@
 <cfscript>
-  Users = createObject('components.Users');
-  Challenges = createObject('components.Challenges');
-  ActivityTypes = createObject('components.ActivityTypes');
-  Activities = createObject('components.Activities');
+  Users = createObject('component', 'components.Users');
+  Challenges = createObject('component', 'components.Challenges');
+  ActivityTypes = createObject('component', 'components.ActivityTypes');
+  Activities = createObject('component', 'components.Activities');
   currentChallenge = Challenges.current();
 </cfscript>
 
@@ -45,7 +45,7 @@
       <label for="WellnessUserID">Email address</label>
       <select class="form-control select2-control" id="WellnessUserID" name="WellnessUserID" required>
         <option></option>
-        <cfloop array="#Users.all()#" index="user">
+        <cfloop array="#Users.find().toArray()#" index="user">
           <option value="#user.getID()#">#user.getEmail()#</option>
         </cfloop>
       </select>
