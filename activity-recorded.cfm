@@ -9,9 +9,9 @@
     <cfinclude template="./includes/body-top.cfm">
 
     <h1>Record Activity</h1>
-    <h2>Includes <em>formActivity.cfm</em></h2>
+    <h2>Includes <em>insertActivity.cfm</em></h2>
 
-    <cfinclude template="./customcf/formActivity.cfm">
+    <cfinclude template="./customcf/insertActivity.cfm">
 
     <cfinclude template="./includes/body-bottom.cfm">
 

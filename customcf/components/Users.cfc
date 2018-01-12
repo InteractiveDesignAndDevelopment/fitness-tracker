@@ -40,13 +40,17 @@ component Users accessors=true output=false persistent=false {
     savecontent variable='sql' {
       WriteOutput(' SELECT WellnessUser.*');
       WriteOutput('   FROM WellnessUser');
+
       if (StructKeyExists(arguments, 'where')) {
         WriteOutput(' WHERE 1=1');
+
         if (StructKeyExists(arguments.where, 'email')) {
           WriteOutput(' AND WellnessUser.email = :email');
           params.email = arguments.where.email;
         }
+
       }
+
       WriteOutput(' ORDER BY Email');
     }
 

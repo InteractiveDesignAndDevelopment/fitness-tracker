@@ -1,7 +1,12 @@
 <cfscript>
+  include '_functions.cfm';
+
   Users = createObject('component', 'components.Users');
+  allUsers = Users.find().toArray();
   Challenges = createObject('component', 'components.Challenges');
+  allChallenges = Challenges.find().toArray();
   ActivityTypes = createObject('component', 'components.ActivityTypes');
+  allActivityTypes = ActivityTypes.find().toArray();
   Activities = createObject('component', 'components.Activities');
   currentChallenge = Challenges.current();
 </cfscript>
@@ -27,16 +32,6 @@
     </div>
   </cfloop>
 
-  <!---
-  <p>
-  Statistics for all of Mercer, Move More for Heart Health 2016<br />
-  <cfoutput query="getSumOfActivities">
-    Total minutes of exercise: #NumberFormat(SumOfMeasuresAll, ",")#
-    <div>#NumberFormat(SumOfMeasuresAll, ",")#</div>
-  </cfoutput>
-  </p>
-  --->
-
   <h2>Individual Statistics</h2>
 
   <form action="./view-statistics-by-user.cfm" method="post">
@@ -45,8 +40,8 @@
       <label for="WellnessUserID">Email address</label>
       <select class="form-control select2-control" id="WellnessUserID" name="WellnessUserID" required>
         <option></option>
-        <cfloop array="#Users.find().toArray()#" index="user">
-          <option value="#user.getID()#">#user.getEmail()#</option>
+        <cfloop array="#allUsers#" index="user">
+          <option value="#user.getID()#" #selectIfSingle(allUsers)#>#user.getEmail()#</option>
         </cfloop>
       </select>
     </div>
@@ -55,8 +50,8 @@
       <label for="ChallengeID">Challenge</label>
       <select class="form-control" id="ChallengeID" name="ChallengeID">
         <option></option>
-        <cfloop array="#challenges.all()#" index="challenge">
-          <option value="#challenge.getID()#">#challenge.getName()#</option>
+        <cfloop array="#allChallenges#" index="challenge">
+          <option value="#challenge.getID()#" #selectIfSingle(allChallenges)#>#challenge.getName()#</option>
         </cfloop>
       </select>
     </div>
@@ -65,8 +60,8 @@
       <label for="ActivityTypeID">Activity type</label>
       <select class="form-control" id="ActivityTypeID" name="ActivityTypeID">
         <option></option>
-        <cfloop array="#activityTypes.all()#" index="activityType">
-          <option value="#activityType.getID()#">#activityType.getName()#</option>
+        <cfloop array="#allActivityTypes#" index="activityType">
+          <option value="#activityType.getID()#" #selectIfSingle(allActivityTypes)#>#activityType.getName()#</option>
         </cfloop>
       </select>
     </div>

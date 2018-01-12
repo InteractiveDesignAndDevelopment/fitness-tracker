@@ -1,127 +1,119 @@
+<cfscript>
+  include '_functions.cfm';
 
-<script>
-  function validateForm() {
-    var x = document.forms["ActivityEntry"]["Measure"].value;
-    if ( (x == null) || (x == "") ) {
-      alert("Enter valid number for measure of your activity");
-      return false;
-    }
-    x = document.forms["ActivityEntry"]["WellnessUserID"].value;
-    if (x == null || x == "") {
-      alert("Select your registered email address");
-      return false;
-    }
-  }
-</script>
+  Users = createObject('component', 'components.Users');
+  allUsers = Users.find().toArray();
+  Challenges = createObject('component', 'components.Challenges');
+  allChallenges = Challenges.find().toArray();
+  ActivityTypes = createObject('component', 'components.ActivityTypes');
+  allActivityTypes = ActivityTypes.find().toArray();
+</cfscript>
 
-<cfquery name="getWellnessUsers" datasource="dsnWellness">
-  SELECT
-    ID,
-    Email
-    FROM WellnessUser
-    ORDER BY Email
-</cfquery>
+<cfoutput>
 
-<cfquery name="getChallenges" datasource="dsnWellness">
-  SELECT
-    ID,
-    Name
-    FROM Challenge
-    ORDER BY Name
-</cfquery>
+  <form action="./activity-recorded.cfm" method="post">
 
-<cfquery name="getActivityTypes" datasource="dsnWellness">
-  SELECT
-    ID,
-    Name
-    FROM ActivityType
-    ORDER BY Name
-</cfquery>
+    <div class="form-group">
+      <label for="WellnessUserID">Email address</label>
+      <select class="form-control" id="WellnessUserID" name="WellnessUserID" required>
+        <option></option>
+        <cfloop array="#allUsers#" index="user">
+          <option value="#user.getID()#" #selectIfSingle(allUsers)#>#user.getEmail()#</option>
+        </cfloop>
+      </select>
+    </div>
 
-<form action="activity-recorded.cfm" onsubmit="return validateForm()" name="ActivityEntry" method="post">
-  Email address<br />
-  <select name="WellnessUserID">
-    <option value="">Please select YOUR registered email address</option>
-    <cfoutput query="GetWellnessUsers">
-      <option value="#ID#">#Email#</option>
-    </cfoutput>
-  </select>
-  <br />
-  <br />
-  Challenge<br />
-  <select name="ChallengeID">
-    <cfoutput query="GetChallenges">
-      <option value="#ID#">#Name#</option>
-    </cfoutput>
-  </select>
-  <br />
-  <br />
-  Activity Type<br />
-  <select name="ActivityTypeID">
-    <cfoutput query="GetActivityTypes">
-      <option value="#ID#">#Name#</option>
-    </cfoutput>
-  </select>
-  <br />
-  <br />
-  How many?<br />
-  <input type = "Text" name = "Measure">
-  <br />
-  <br />
-  Date of activity: <br />
-  <select name="strActivityDateMonth" required>
-    <option value="01">January</option>
-    <option value="02">February</option>
-    <option value="03">March</option>
-    <option value="04">April</option>
-    <option value="05">May</option>
-    <option value="06">June</option>
-    <option value="07">July</option>
-    <option value="08">August</option>
-    <option value="09">September</option>
-    <option value="10">October</option>
-    <option value="11">November</option>
-    <option value="12">December</option>
-  </select>
-  <select name="strActivityDateDay" required>
-    <option value="01">1</option>
-    <option value="02">2</option>
-    <option value="03">3</option>
-    <option value="04">4</option>
-    <option value="05">5</option>
-    <option value="06">6</option>
-    <option value="07">7</option>
-    <option value="08">8</option>
-    <option value="09">9</option>
-    <option value="10">10</option>
-    <option value="11">11</option>
-    <option value="12">12</option>
-    <option value="13">13</option>
-    <option value="14">14</option>
-    <option value="15">15</option>
-    <option value="16">16</option>
-    <option value="17">17</option>
-    <option value="18">18</option>
-    <option value="19">19</option>
-    <option value="20">20</option>
-    <option value="21">21</option>
-    <option value="22">22</option>
-    <option value="23">23</option>
-    <option value="24">24</option>
-    <option value="25">25</option>
-    <option value="26">26</option>
-    <option value="27">27</option>
-    <option value="28">28</option>
-    <option value="29">29</option>
-    <option value="30">30</option>
-    <option value="31">31</option>
-  </select>
-  <select name="strActivityDateYear" required>
-    <option value="2016">2016</option>
-    <option value="2017">2017</option>
-    <option value="2018">2018</option>
-  </select>
-  <br />
-  <br />
-  <input type="Submit" name="Submit" value="Record activity">
-</form>
+    <div class="form-group">
+      <label for="ChallengeID">Challenge</label>
+      <select class="form-control" id="ChallengeID" name="ChallengeID" required>
+        <option></option>
+        <cfloop array="#allChallenges#" index="challenge">
+          <option value="#challenge.getID()#" #selectIfSingle(allChallenges)#>#challenge.getName()#</option>
+        </cfloop>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="ActivityTypeID">Activity Type</label>
+      <select class="form-control" id="ActivityTypeID" name="ActivityTypeID" required>
+        <option></option>
+        <cfloop array="#allActivityTypes#" index="activityType">
+          <option value="#activityType.getID()#" #selectIfSingle(allActivityTypes)#>#activityType.getName()#</option>
+        </cfloop>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="Measure">How many</label>
+      <input class="form-control" type="text" id="Measure" name="Measure" required>
+    </div>
+
+    <div class="form-group">
+      <label>Date of activity</label>
+      <input type="hidden" id="ActivityDate" name="ActivityDate" required>
+      <div style="overflow:hidden;">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-9">
+              <div id="ActivityDate-datepicker"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <input type="submit" name="Submit" value="Record activity">
+    </div>
+
+  </form>
+
+  <script>
+    // Set the "bootstrap" theme as the default theme for all Select2
+    // widgets.
+    //
+    // @see https://github.com/select2/select2/issues/2927
+    $.fn.select2.defaults.set('theme', 'bootstrap');
+
+    (function() {
+      var $activityDate = $('##ActivityDate');
+      var $activityDateTimePicker = $('##ActivityDate-datepicker');
+      var $wellnessUserId = $('##WellnessUserID');
+      var $challengeId = $('##ChallengeID');
+      var $activityTypeId = $('##ActivityTypeID');
+
+      var onChangeActivityDateTimePicker = function() {
+        var v = $activityDateTimePicker.data('DateTimePicker').date();
+        var m = moment(v);
+        var f = m.format('YYYY-MM-DD');
+        $activityDate.val(f);
+      }
+
+      $wellnessUserId.select2({
+        placeholder: 'Select your email address',
+        width: null
+      });
+
+      $challengeId.select2({
+        placeholder: 'Select a challenge',
+        width: null
+      });
+
+      $activityTypeId.select2({
+        placeholder: 'Select an activity type',
+        width: null
+      });
+
+      $activityDateTimePicker.datetimepicker({
+        format: 'YYYY-MM-DD',
+        inline: true
+      });
+
+      $activityDateTimePicker.on('dp.change', onChangeActivityDateTimePicker);
+
+      $(function () {
+        onChangeActivityDateTimePicker();
+      });
+    })();
+  </script>
+</cfoutput>

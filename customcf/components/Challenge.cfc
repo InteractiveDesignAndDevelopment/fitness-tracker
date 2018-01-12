@@ -6,6 +6,7 @@
  **/
 component accessors=true output=false persistent=false {
   property id;
+  property isCurrent;
   property name;
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -23,6 +24,9 @@ component accessors=true output=false persistent=false {
       var row = arguments[1];
       if (StructKeyExists(row, 'id')) {
         setID(row.id);
+      }
+      if (StructKeyExists(row, 'isCurrent')) {
+        setIsCurrent(1 == row.isCurrent);
       }
       if (StructKeyExists(row, 'name')) {
         setName(row.name);

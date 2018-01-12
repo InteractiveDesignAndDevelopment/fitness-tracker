@@ -30,26 +30,40 @@ component accessors=true output=false persistent=false {
 
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
-  public array function all() {
+  public array function find() {
+    var params = {};
     var results = queryNew('');
     var sql = '';
-    sql &= '   SELECT *';
-    sql &= '     FROM Challenge';
-    sql &= ' ORDER BY Name';
-    results = queryExecute(sql, {}, { datasource = 'dsnWellness' });
+
+    savecontent variable='sql' {
+      WriteOutput(' SELECT Challenge.*');
+      WriteOutput('   FROM Challenge');
+
+      // if (StructKeyExists(arguments, 'where')) {
+      //   WriteOutput(' WHERE 1=1');
+      //
+      //   if (StructKeyExists(arguments.where, 'isCurrent')) {
+      //     WriteOutput(' AND Challenge.isCurrent = :isCurrent');
+      //     params.isCurrent = IsNumeric(arguments.where.isCurrent) ?
+      //       arguments.where.isCurrent :
+      //       booleanToInt(arguments.where.isCurrent);
+      //     }
+      //   }
+      //
+      // }
+
+      WriteOutput(' ORDER BY Challenge.Name');
+    }
+
+    results = queryExecute(sql, params, { datasource = 'dsnWellness' });
+
     return challengesQuerytoChallengeArray(results);
   }
 
   public component function current() {
-    var results = queryNew('');
-    var sql = '';
-    sql &= ' SELECT *';
-    sql &= '   FROM Challenge';
-    sql &= '  WHERE isCurrent = ''1''';
-    results = queryExecute(sql, {}, { datasource = 'dsnWellness' });
-    arr = challengesQuerytoChallengeArray(results);
-    if (1 <= ArrayLen(arr)) {
-      return arr[1];
+    currentChallenge = this.find(where = { isCurrent = true })
+    if (1 == ArrayLen(currentChallenge)) {
+      return currentChallenge[1];
     } else {
       return;
     }
@@ -64,6 +78,14 @@ component accessors=true output=false persistent=false {
   ██      ██   ██ ██   ████   ██   ██    ██    ███████
 
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+  // private boolean function booleanToInt(required boolean b) {
+  //   return b ? 1 : 0;
+  // }
+  //
+  // private numeric function intToBoolean(required numeric i) {
+  //   return 1 == i;
+  // }
 
   private array function challengesQuerytoChallengeArray(required query challengesQuery) {
     var challengeArray = [];

@@ -16,6 +16,10 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" />
 
+<link
+  rel="stylesheet"
+  href="https://assets.mercer.edu/bootstrap-datetimepicker/4.17.47/build/css/bootstrap-datetimepicker.min.css" />
+
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -35,3 +39,11 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"
   integrity="sha256-FA14tBI8v+/1BtcH9XtJpcNbComBEpdawUZA6BPXRVw="
   crossorigin="anonymous"></script>
+
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"
+  integrity="sha256-ABVkpwb9K9PxubvRrHMkk6wmWcIHUE9eBxNZLXYQ84k="
+  crossorigin="anonymous"></script>
+
+<script
+  src="https://assets.mercer.edu/bootstrap-datetimepicker/4.17.47/build/js/bootstrap-datetimepicker.min.js"></script>
