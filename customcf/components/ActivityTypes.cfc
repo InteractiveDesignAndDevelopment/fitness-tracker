@@ -52,7 +52,7 @@ component accessors=true output=false persistent=false {
         WriteOutput(' WHERE 1=1');
         if (StructKeyExists(arguments.where, 'challenge_id')) {
           WriteOutput('    AND activity_types.id IN (');
-          WriteOutput(' SELECT DISTINCT activities.type_id');
+          WriteOutput(' SELECT DISTINCT activities.activity_type_id');
           WriteOutput('   FROM activities');
           WriteOutput('  WHERE activities.challenge_id = :challenge_id');
           WriteOutput('    AND activities.activity_type_id = activity_types.id');
