@@ -78,13 +78,13 @@ component accessors=true output=false persistent=false {
         WriteOutput(' WHERE 1=1');
 
         if (StructKeyExists(arguments.where, 'challenge_id')) {
-          WriteOutput(' AND activities.challenge_id = :challengeID');
-          params.challengeID = arguments.where.challenge_id;
+          WriteOutput(' AND activities.challenge_id = :challenge_id');
+          params.challenge_id = arguments.where.challenge_id;
         }
 
         if (StructKeyExists(arguments.where, 'user_id')) {
-          WriteOutput(' AND activities.user_id = :wellnessUserID');
-          params.wellnessUserID = arguments.where.wellnessUserID;
+          WriteOutput(' AND activities.user_id = :user_id');
+          params.user_id = arguments.where.user_id;
         }
       }
     };

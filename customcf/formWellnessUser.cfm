@@ -42,7 +42,7 @@
     // @see https://github.com/select2/select2/issues/2927
     $.fn.select2.defaults.set('theme', 'bootstrap');
 
-    $('##WellnessUserTypeID').select2({
+    $('##user_type_id').select2({
       placeholder: 'Select a user type',
       width: null
     });

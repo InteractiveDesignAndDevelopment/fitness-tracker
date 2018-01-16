@@ -75,7 +75,7 @@ component accessors=true output=false persistent=false {
   public numeric function sumActivity() {
     var Activities = createObject('component', 'Activities');
     var where = {
-      wellnessUserId = this.getID()
+      user_id = this.getID()
     }
 
     if (StructKeyExists(arguments, 'where')) {
