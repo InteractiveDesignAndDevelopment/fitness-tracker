@@ -153,7 +153,7 @@ component accessors=true output=false persistent=false {
       // WriteDump(results);
       setID(queryGetRow(results, 1).id);
       return true;
-    } catch (err) {
+    } catch (any e) {
       return false;
     }
   }
