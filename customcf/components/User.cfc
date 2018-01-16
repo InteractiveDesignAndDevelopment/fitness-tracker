@@ -10,7 +10,7 @@ component accessors=true output=false persistent=false {
   property firstName;
   property id;
   property lastName;
-  property wellnessUserTypeID;
+  property userTypeID;
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
@@ -24,21 +24,26 @@ component accessors=true output=false persistent=false {
 
   public component function init () {
     if (1 == arrayLen(arguments) && IsStruct(arguments[1])) {
-      var row = arguments[1];
-      if (StructKeyExists(row, 'email')) {
-        setEmail(row.email);
+      var s = arguments[1];
+
+      if (StructKeyExists(s, 'email')) {
+        setEmail(s.email);
       }
-      if (StructKeyExists(row, 'firstName')) {
-        setFirstName(row.firstName);
+
+      if (StructKeyExists(s, 'first_name')) {
+        setFirstName(s.first_name);
       }
-      if (StructKeyExists(row, 'id')) {
-        setID(row.id);
+
+      if (StructKeyExists(s, 'id')) {
+        setID(s.id);
       }
-      if (StructKeyExists(row, 'lastName')) {
-        setLastName(row.lastName);
+
+      if (StructKeyExists(s, 'last_name')) {
+        setLastName(s.last_name);
       }
-      if (StructKeyExists(row, 'wellnessUserTypeID')) {
-        setWellnessUserTypeID(row.wellnessUserTypeID);
+
+      if (StructKeyExists(s, 'user_type_id')) {
+        setUserTypeID(s.user_type_id);
       }
     }
     return this;
@@ -67,17 +72,30 @@ component accessors=true output=false persistent=false {
     }
   }
 
+  public numeric function sumActivity() {
+    var Activities = createObject('component', 'Activities');
+    var where = {
+      wellnessUserId = this.getID()
+    }
+
+    if (StructKeyExists(arguments, 'where')) {
+      StructAppend(where, arguments.where, false);
+    }
+
+    return Activities.sum(where);
+  }
+
   public component function type() {
     return this.userType(argumentsCollection = arguments);
   }
 
   public component function userType() {
-    if (0 == Len(this.getWellnessUserTypeID())) {
+    if (0 == Len(this.getUserTypeID())) {
       return;
     }
 
     var UserTypes = createObject('component', 'UserTypes');
-    var results = UserTypes.find(where = { id = getWellnessUserTypeID() });
+    var results = UserTypes.find(where = { id = getUserTypeID() });
 
     if (1 != ArrayLen(results.toArray())) {
       return;
@@ -108,31 +126,31 @@ component accessors=true output=false persistent=false {
     var sql = '';
 
     savecontent variable='sql' {
-      WriteOutput(' INSERT INTO WellnessUser (');
-      WriteOutput('   Email,');
-      WriteOutput('   Firstname,');
-      WriteOutput('   Lastname,');
-      WriteOutput('   WellnessUserTypeID');
+      WriteOutput(' INSERT INTO Users (');
+      WriteOutput('   email,');
+      WriteOutput('   first_name,');
+      WriteOutput('   last_name,');
+      WriteOutput('   user_type_id');
       WriteOutput(' )');
       WriteOutput(' OUTPUT INSERTED.*');
       WriteOutput(' VALUES (');
       WriteOutput('   :email,');
-      WriteOutput('   :firstName,');
-      WriteOutput('   :lastName,');
-      WriteOutput('   :wellnessUserTypeID');
+      WriteOutput('   :first_name,');
+      WriteOutput('   :last_name,');
+      WriteOutput('   :user_type_id');
       WriteOutput(' )');
     }
 
     var params = {
-      email = this.getEmail(),
-      firstName = this.getFirstName(),
-      lastName = this.getLastName(),
-      wellnessUserTypeID = this.getWellnessUserTypeID()
+      email        = this.getEmail(),
+      first_name   = this.getFirstName(),
+      last_name    = this.getLastName(),
+      user_type_id = this.getUserTypeID()
     }
 
     try {
       var results = queryExecute(sql, params, { datasource = 'dsnWellness' });
-      WriteDump(results);
+      // WriteDump(results);
       setID(queryGetRow(results, 1).id);
       return true;
     } catch (err) {

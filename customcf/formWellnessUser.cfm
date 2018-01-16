@@ -6,23 +6,23 @@
 
   <form action="./user-registered.cfm" method="post">
     <div class="form-group">
-      <label for="Firstname">First name</label>
-      <input class="form-control" type="text" id="Firstname" name="Firstname" required>
+      <label for="first_name">First name</label>
+      <input class="form-control" type="text" id="first_name" name="first_name" required>
     </div>
 
     <div class="form-group">
-      <label for="Lastname">Last name</label>
-      <input class="form-control" type="text" id="Lastname" name="Lastname" required>
+      <label for="last_name">Last name</label>
+      <input class="form-control" type="text" id="last_name" name="last_name" required>
     </div>
 
     <div class="form-group">
-      <label for="Email">Email address</label>
-      <input class="form-control" type="email" id="Email" name="Email" required>
+      <label for="email">Email address</label>
+      <input class="form-control" type="email" id="email" name="email" required>
     </div>
 
     <div class="form-group">
-      <label for="WellnessUserTypeID">Employee or Student</label>
-      <select class="form-control select2-control" id="WellnessUserTypeID" name="WellnessUserTypeID" required>
+      <label for="user_type_id">Employee or Student</label>
+      <select class="form-control select2-control" id="user_type_id" name="user_type_id" required>
         <option></option>
         <cfloop array="#UserTypes.find().toArray()#" index="type">
           <option value="#type.getID()#">#type.getName()#</option>

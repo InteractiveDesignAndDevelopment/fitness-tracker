@@ -38,20 +38,25 @@ component Users accessors=true output=false persistent=false {
     var sql = '';
 
     savecontent variable='sql' {
-      WriteOutput(' SELECT WellnessUser.*');
-      WriteOutput('   FROM WellnessUser');
+      WriteOutput(' SELECT users.*');
+      WriteOutput('   FROM users');
 
       if (StructKeyExists(arguments, 'where')) {
         WriteOutput(' WHERE 1=1');
 
         if (StructKeyExists(arguments.where, 'email')) {
-          WriteOutput(' AND WellnessUser.email = :email');
+          WriteOutput(' AND users.email = :email');
           params.email = arguments.where.email;
+        }
+
+        if (StructKeyExists(arguments.where, 'id')) {
+          WriteOutput(' AND users.id = :id');
+          params.id = arguments.where.id;
         }
 
       }
 
-      WriteOutput(' ORDER BY Email');
+      WriteOutput(' ORDER BY email');
     }
 
     results = queryExecute(sql, params, { datasource = 'dsnWellness' });

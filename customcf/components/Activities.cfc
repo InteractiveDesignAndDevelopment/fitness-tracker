@@ -44,20 +44,20 @@ component accessors=true output=false persistent=false {
     }
 
     savecontent variable='sql' {
-      WriteOutput(' SELECT Activity.*');
-      WriteOutput('   FROM Activity');
+      WriteOutput(' SELECT activities.*');
+      WriteOutput('   FROM activities');
       if (StructKeyExists(arguments, 'where')) {
         WriteOutput(' WHERE 1=1');
-        if (StructKeyExists(arguments.where, 'challengeID')) {
-          WriteOutput(' AND ChallengeID = :challengeID');
-          params.challengeID = arguments.where.challengeID;
+        if (StructKeyExists(arguments.where, 'challenge_id')) {
+          WriteOutput(' AND challenge_id = :challenge_id');
+          params.challenge_id = arguments.where.challenge_id;
         }
-        if (StructKeyExists(arguments.where, 'activityTypeID')) {
-          WriteOutput(' AND TypeID = :activityTypeID');
-          params.activityTypeID = arguments.where.activityTypeID;
+        if (StructKeyExists(arguments.where, 'activity_type_id')) {
+          WriteOutput(' AND activity_type_id = :activity_type_id');
+          params.activity_type_id = arguments.where.activity_type_id;
         }
       }
-      WriteOutput(' ORDER BY ActivityDate');
+      WriteOutput(' ORDER BY activity_date');
     }
     // WriteDump(sql);
 
@@ -66,30 +66,37 @@ component accessors=true output=false persistent=false {
     return activitiesQuerytoActivityArray(results);
   }
 
-  // public function sum(options = {}) {
-  //   var results = queryNew('');
-  //   var sql = '';
-  //   var challengeID = '';
-  //   var params = {};
-  //
-  //   if (structKeyExists(options, 'challengeID')) {
-  //     challengeID = options.challengeID;
-  //   }
-  //
-  //   sql &= ' SELECT SUM(Measure) AS SumOfMeasuresAll';
-  //   sql &= '   FROM Activity';
-  //   if (0 < len(challengeID)) {
-  //     sql &= '  WHERE ChallengeID = :challengeID';
-  //   }
-  //
-  //   if (0 < len(challengeID)) {
-  //     params.challengeID = challengeID;
-  //   }
-  //
-  //   results = queryExecute(sql, params, { datasource = 'dsnWellness' });
-  //
-  //   return results;
-  // }
+  public numeric function sum() {
+    var sql = '';
+    var params = {};
+
+    savecontent variable='sql' {
+      WriteOutput(' SELECT SUM(measure) AS sum_measure');
+      WriteOutput('   FROM activities');
+
+      if (StructKeyExists(arguments, 'where')) {
+        WriteOutput(' WHERE 1=1');
+
+        if (StructKeyExists(arguments.where, 'challenge_id')) {
+          WriteOutput(' AND activities.challenge_id = :challengeID');
+          params.challengeID = arguments.where.challenge_id;
+        }
+
+        if (StructKeyExists(arguments.where, 'user_id')) {
+          WriteOutput(' AND activities.user_id = :wellnessUserID');
+          params.wellnessUserID = arguments.where.wellnessUserID;
+        }
+      }
+    };
+
+    results = queryExecute(sql, params, { datasource = 'dsnWellness' });
+
+    if (1 == results.RecordCount) {
+      return queryGetRow(results, 1).sum_measure;
+    } else {
+      return;
+    }
+  }
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 

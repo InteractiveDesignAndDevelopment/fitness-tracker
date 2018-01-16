@@ -7,8 +7,8 @@
   <cfif isSaved>
     <p><strong>Successfully registered user!</strong></p>
     <p>
-      Firstname = #User.getFirstname()#<br>
-      Lastname = #User.getLastname()#<br>
+      First Name = #User.getFirstName()#<br>
+      Last Name = #User.getLastName()#<br>
       Email = #User.getEmail()#<br>
       Type = #User.userType().getName()#
     </p>

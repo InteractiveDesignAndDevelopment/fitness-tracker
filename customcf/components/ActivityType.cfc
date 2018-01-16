@@ -23,12 +23,14 @@ component accessors=true output=false persistent=false {
   public component function init() {
 
     if (1 == ArrayLen(arguments) && IsStruct(arguments[1])) {
-      var row = arguments[1];
-      if (StructKeyExists(row, 'id')) {
-        setID(row.id);
+      var s = arguments[1];
+
+      if (StructKeyExists(s, 'id')) {
+        setID(s.id);
       }
-      if (StructKeyExists(row, 'name')) {
-        setName(row.name);
+
+      if (StructKeyExists(s, 'name')) {
+        setName(s.name);
       }
     }
 

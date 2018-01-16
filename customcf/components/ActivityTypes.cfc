@@ -33,9 +33,9 @@ component accessors=true output=false persistent=false {
   public function all() {
     var results = queryNew('');
     var sql = '';
-    sql &= '   SELECT *';
-    sql &= '     FROM ActivityType';
-    sql &= ' ORDER BY Name';
+    sql &= '   SELECT activity_types.*';
+    sql &= '     FROM activity_types';
+    sql &= ' ORDER BY activity_types.name';
     results = queryExecute(sql, {}, { datasource = 'dsnWellness' });
     return activityTypesQuerytoActivityTypeArray(results);
   }
@@ -46,18 +46,18 @@ component accessors=true output=false persistent=false {
     var sql = '';
 
     savecontent variable='sql' {
-      WriteOutput(' SELECT ActivityType.*');
-      WriteOutput('   FROM ActivityType');
+      WriteOutput(' SELECT activity_types.*');
+      WriteOutput('   FROM activity_types');
       if (StructKeyExists(arguments, 'where')) {
         WriteOutput(' WHERE 1=1');
-        if (StructKeyExists(arguments.where, 'challengeID')) {
-          WriteOutput('    AND ActivityType.ID IN (');
-          WriteOutput(' SELECT DISTINCT Activity.TypeID');
-          WriteOutput('   FROM Activity');
-          WriteOutput('  WHERE Activity.ChallengeID = :challengeID');
-          WriteOutput('    AND Activity.TypeID = ActivityType.ID');
+        if (StructKeyExists(arguments.where, 'challenge_id')) {
+          WriteOutput('    AND activity_types.id IN (');
+          WriteOutput(' SELECT DISTINCT activities.type_id');
+          WriteOutput('   FROM activities');
+          WriteOutput('  WHERE activities.challenge_id = :challenge_id');
+          WriteOutput('    AND activities.activity_type_id = activity_types.id');
           WriteOutput(' )');
-          params.challengeID = arguments.where.challengeID;
+          params.challenge_id = arguments.where.challenge_id;
         }
       }
     }

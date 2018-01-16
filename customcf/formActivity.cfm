@@ -14,8 +14,8 @@
   <form action="./activity-recorded.cfm" method="post">
 
     <div class="form-group">
-      <label for="WellnessUserID">Email address</label>
-      <select class="form-control" id="WellnessUserID" name="WellnessUserID" required>
+      <label for="user_id">Email address</label>
+      <select class="form-control" id="user_id" name="user_id" required>
         <option></option>
         <cfloop array="#allUsers#" index="user">
           <option value="#user.getID()#" #selectIfSingle(allUsers)#>#user.getEmail()#</option>
@@ -24,8 +24,8 @@
     </div>
 
     <div class="form-group">
-      <label for="ChallengeID">Challenge</label>
-      <select class="form-control" id="ChallengeID" name="ChallengeID" required>
+      <label for="challenge_id">Challenge</label>
+      <select class="form-control" id="challenge_id" name="challenge_id" required>
         <option></option>
         <cfloop array="#allChallenges#" index="challenge">
           <option value="#challenge.getID()#" #selectIfSingle(allChallenges)#>#challenge.getName()#</option>
@@ -34,8 +34,8 @@
     </div>
 
     <div class="form-group">
-      <label for="ActivityTypeID">Activity Type</label>
-      <select class="form-control" id="ActivityTypeID" name="ActivityTypeID" required>
+      <label for="activity_type_id">Activity Type</label>
+      <select class="form-control" id="activity_type_id" name="activity_type_id" required>
         <option></option>
         <cfloop array="#allActivityTypes#" index="activityType">
           <option value="#activityType.getID()#" #selectIfSingle(allActivityTypes)#>#activityType.getName()#</option>
@@ -50,12 +50,12 @@
 
     <div class="form-group">
       <label>Date of activity</label>
-      <input type="hidden" id="ActivityDate" name="ActivityDate" required>
+      <input type="hidden" id="activity_date" name="activity_date" required>
       <div style="overflow:hidden;">
         <div class="form-group">
           <div class="row">
             <div class="col-xs-offset-1 col-xs-9">
-              <div id="ActivityDate-datepicker"></div>
+              <div id="activity_date-datepicker"></div>
             </div>
           </div>
         </div>
@@ -76,43 +76,43 @@
     $.fn.select2.defaults.set('theme', 'bootstrap');
 
     (function() {
-      var $activityDate = $('##ActivityDate');
-      var $activityDateTimePicker = $('##ActivityDate-datepicker');
-      var $wellnessUserId = $('##WellnessUserID');
-      var $challengeId = $('##ChallengeID');
-      var $activityTypeId = $('##ActivityTypeID');
+      var $activity_date = $('##activity_date');
+      var $activity_dateTimePicker = $('##activity_date-datepicker');
+      var $user_id = $('##user_id');
+      var $challenge_id = $('##challenge_id');
+      var $activity_type_id = $('##activity_type_id');
 
-      var onChangeActivityDateTimePicker = function() {
-        var v = $activityDateTimePicker.data('DateTimePicker').date();
+      var onChangeactivity_dateTimePicker = function() {
+        var v = $activity_dateTimePicker.data('DateTimePicker').date();
         var m = moment(v);
         var f = m.format('YYYY-MM-DD');
-        $activityDate.val(f);
+        $activity_date.val(f);
       }
 
-      $wellnessUserId.select2({
+      $user_id.select2({
         placeholder: 'Select your email address',
         width: null
       });
 
-      $challengeId.select2({
+      $challenge_id.select2({
         placeholder: 'Select a challenge',
         width: null
       });
 
-      $activityTypeId.select2({
+      $activity_type_id.select2({
         placeholder: 'Select an activity type',
         width: null
       });
 
-      $activityDateTimePicker.datetimepicker({
+      $activity_dateTimePicker.datetimepicker({
         format: 'YYYY-MM-DD',
         inline: true
       });
 
-      $activityDateTimePicker.on('dp.change', onChangeActivityDateTimePicker);
+      $activity_dateTimePicker.on('dp.change', onChangeactivity_dateTimePicker);
 
       $(function () {
-        onChangeActivityDateTimePicker();
+        onChangeactivity_dateTimePicker();
       });
     })();
   </script>

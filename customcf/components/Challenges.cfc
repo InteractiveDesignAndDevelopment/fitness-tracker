@@ -36,8 +36,8 @@ component accessors=true output=false persistent=false {
     var sql = '';
 
     savecontent variable='sql' {
-      WriteOutput(' SELECT Challenge.*');
-      WriteOutput('   FROM Challenge');
+      WriteOutput(' SELECT challenges.*');
+      WriteOutput('   FROM challenges');
 
       // if (StructKeyExists(arguments, 'where')) {
       //   WriteOutput(' WHERE 1=1');
@@ -52,7 +52,7 @@ component accessors=true output=false persistent=false {
       //
       // }
 
-      WriteOutput(' ORDER BY Challenge.Name');
+      WriteOutput(' ORDER BY challenges.name');
     }
 
     results = queryExecute(sql, params, { datasource = 'dsnWellness' });

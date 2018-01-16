@@ -39,16 +39,16 @@ component Users accessors=true output=false persistent=false {
     var sql = '';
 
     savecontent variable='sql' {
-      WriteOutput('   SELECT WellnessUserType.*');
-      WriteOutput('     FROM WellnessUserType');
+      WriteOutput('   SELECT user_types.*');
+      WriteOutput('     FROM user_types');
       if (StructKeyExists(arguments, 'where')) {
         WriteOutput(' WHERE 1=1');
         if (StructKeyExists(arguments.where, 'id')) {
-          WriteOutput(' AND WellnessUserType.id = :id');
+          WriteOutput(' AND user_types.id = :id');
           params.id = arguments.where.id;
         }
       }
-      WriteOutput(' ORDER BY WellnessUserType.name');
+      WriteOutput(' ORDER BY user_types.name');
     }
     // WriteDump(sql);
 

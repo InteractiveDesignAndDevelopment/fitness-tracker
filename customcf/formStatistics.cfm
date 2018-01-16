@@ -3,12 +3,15 @@
 
   Users = createObject('component', 'components.Users');
   allUsers = Users.find().toArray();
+
   Challenges = createObject('component', 'components.Challenges');
   allChallenges = Challenges.find().toArray();
+  currentChallenge = Challenges.current();
+
   ActivityTypes = createObject('component', 'components.ActivityTypes');
   allActivityTypes = ActivityTypes.find().toArray();
+
   Activities = createObject('component', 'components.Activities');
-  currentChallenge = Challenges.current();
 </cfscript>
 
 <cfoutput>
@@ -16,20 +19,24 @@
   <h2>Collective Statistics</h2>
 
   <h3>#currentChallenge.getName()#</h3>
+
   <cfloop array="#currentChallenge.activityTypes()#" index="activityType">
+
     <cfscript>
       associatedActivities = Activities.find(where = {
-        challengeID    = currentChallenge.getID(),
-        activityTypeID = activityType.getID()
+        challenge_id    = currentChallenge.getID(),
+        activity_type_id = activityType.getID()
       });
       sumMeasure = arrayReduce(associatedActivities, function(total, activity) {
         return total + activity.getMeasure();
       }, 0);
     </cfscript>
+
     <div>
       #sumMeasure#
       #activityType.getName()#
     </div>
+
   </cfloop>
 
   <h2>Individual Statistics</h2>
@@ -37,8 +44,8 @@
   <form action="./view-statistics-by-user.cfm" method="post">
 
     <div class="form-group">
-      <label for="WellnessUserID">Email address</label>
-      <select class="form-control select2-control" id="WellnessUserID" name="WellnessUserID" required>
+      <label for="user_id">Email address</label>
+      <select class="form-control select2-control" id="user_id" name="user_id" required>
         <option></option>
         <cfloop array="#allUsers#" index="user">
           <option value="#user.getID()#" #selectIfSingle(allUsers)#>#user.getEmail()#</option>
@@ -47,8 +54,8 @@
     </div>
 
     <div class="form-group">
-      <label for="ChallengeID">Challenge</label>
-      <select class="form-control" id="ChallengeID" name="ChallengeID">
+      <label for="challenge_id">Challenge</label>
+      <select class="form-control" id="challenge_id" name="challenge_id">
         <option></option>
         <cfloop array="#allChallenges#" index="challenge">
           <option value="#challenge.getID()#" #selectIfSingle(allChallenges)#>#challenge.getName()#</option>
@@ -57,8 +64,8 @@
     </div>
 
     <div class="form-group">
-      <label for="ActivityTypeID">Activity type</label>
-      <select class="form-control" id="ActivityTypeID" name="ActivityTypeID">
+      <label for="activity_type_id">Activity type</label>
+      <select class="form-control" id="activity_type_id" name="activity_type_id">
         <option></option>
         <cfloop array="#allActivityTypes#" index="activityType">
           <option value="#activityType.getID()#" #selectIfSingle(allActivityTypes)#>#activityType.getName()#</option>
@@ -77,17 +84,17 @@
     // @see https://github.com/select2/select2/issues/2927
     $.fn.select2.defaults.set('theme', 'bootstrap');
 
-    $('##WellnessUserID').select2({
+    $('##user_id').select2({
       placeholder: 'Select an email address',
       width: null
     });
 
-    $('##ChallengeID').select2({
+    $('##challenge_id').select2({
       placeholder: 'Select a challenge',
       width: null
     });
 
-    $('##ActivityTypeID').select2({
+    $('##activity_type_id').select2({
       placeholder: 'Select an activity type',
       width: null
     });
