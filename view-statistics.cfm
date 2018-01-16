@@ -13,7 +13,7 @@
 
     <cfinclude template="./customcf/formStatistics.cfm">
 
-    <cfinclude template="./includes/body-top.cfm">
+    <cfinclude template="./includes/body-bottom.cfm">
 
   </body>
 </html>
