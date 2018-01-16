@@ -73,7 +73,9 @@
       </select>
     </div>
 
-    <input type="Submit" name="Submit" value="View Single User Statistics">
+    <div>
+      <input class="btn btn-primary" type="Submit" name="Submit" value="View Single User Statistics">
+    </div>
 
   </form>
 
