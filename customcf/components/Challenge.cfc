@@ -53,6 +53,6 @@ component accessors=true output=false persistent=false {
   }
 
   public array function activityTypes () {
-    return new ActivityTypes().find(where = { challenge_id = getID() })
+    return new ActivityTypes().find(where = { challenge_id = getID() });
   }
 }
