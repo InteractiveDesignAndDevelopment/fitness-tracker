@@ -76,7 +76,7 @@ component accessors=true output=false persistent=false {
     var Activities = createObject('component', 'Activities');
     var where = {
       user_id = this.getID()
-    }
+    };
 
     if (StructKeyExists(arguments, 'where')) {
       StructAppend(where, arguments.where, false);
