@@ -88,20 +88,6 @@
       var $challenge_id = $('##challenge_id');
       var $activity_type_id = $('##activity_type_id');
 
-      $activity_date_dateTimePicker.datetimepicker({
-        format: 'YYYY-MM-DD',
-        inline: true
-      });
-
-      var onChangeActivityDateDateTimePicker = function() {
-        var v = $activity_date_dateTimePicker.data('DateTimePicker').date();
-        var m = moment(v);
-        var f = m.format('YYYY-MM-DD');
-        $activity_date.val(f);
-      }
-
-      $activity_date_dateTimePicker.on('dp.change', onChangeActivityDateDateTimePicker);
-
       $(function () {
         // Set the "bootstrap" theme as the default theme for all Select2
         // widgets.
@@ -123,6 +109,20 @@
           placeholder: 'Select an activity type',
           width: null
         });
+
+        $activity_date_dateTimePicker.datetimepicker({
+          format: 'YYYY-MM-DD',
+          inline: true
+        });
+
+        var onChangeActivityDateDateTimePicker = function() {
+          var v = $activity_date_dateTimePicker.data('DateTimePicker').date();
+          var m = moment(v);
+          var f = m.format('YYYY-MM-DD');
+          $activity_date.val(f);
+        }
+
+        $activity_date_dateTimePicker.on('dp.change', onChangeActivityDateDateTimePicker);
 
         onChangeActivityDateDateTimePicker();
       });
