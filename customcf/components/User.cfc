@@ -66,9 +66,9 @@ component accessors=true output=false persistent=false {
 
   public boolean function save() {
     if (0 == Len(this.getID())) {
-      return this.insert(argumentsCollection = arguments);
+      return variables.insert(argumentsCollection = arguments);
     } else {
-      return this.update(argumentsCollection = arguments);
+      return variables.update(argumentsCollection = arguments);
     }
   }
 
@@ -115,8 +115,8 @@ component accessors=true output=false persistent=false {
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
   // TODO: Add update functionality
-  // private struct function update() {
-  // }
+  private boolean function update() {
+  }
 
   private boolean function insert() {
     if (!this.isUnique()) {
