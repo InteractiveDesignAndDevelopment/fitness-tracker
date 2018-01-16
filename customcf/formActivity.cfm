@@ -1,4 +1,13 @@
 <cfscript>
+  // If in CommonSpot...
+  if (StructKeyExists(request, 'cp')) {
+    // Assuming Bootstrap and jQuery are loaded by the template
+    Server.CommonSpot.udf.resources.loadResources('moment');
+    Server.CommonSpot.udf.resources.loadResources('select2');
+    Server.CommonSpot.udf.resources.loadResources('select2-bootstrap-theme');
+    Server.CommonSpot.udf.resources.loadResources('bootstrap-datetimepicker');
+  }
+
   include '_functions.cfm';
 
   Users = createObject('component', 'components.Users');
@@ -21,6 +30,9 @@
           <option value="#user.getID()#" #selectIfSingle(allUsers)#>#user.getEmail()#</option>
         </cfloop>
       </select>
+      <p class="help-block">
+        Start typing to filter the list.
+      </p>
     </div>
 
     <div class="form-group">

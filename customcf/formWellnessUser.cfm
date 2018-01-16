@@ -1,4 +1,11 @@
 <cfscript>
+  // If in CommonSpot...
+  if (StructKeyExists(request, 'cp')) {
+    // Assuming Bootstrap and jQuery are loaded by the template
+    Server.CommonSpot.udf.resources.loadResources('select2');
+    Server.CommonSpot.udf.resources.loadResources('select2-bootstrap-theme');
+  }
+
   UserTypes = createObject('component', 'components.UserTypes');
 </cfscript>
 
