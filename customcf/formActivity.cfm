@@ -57,7 +57,7 @@
 
     <div class="form-group">
       <label for="Measure">How many</label>
-      <input class="form-control" type="text" id="Measure" name="Measure" required>
+      <input class="form-control" type="number" id="measure" name="measure" required>
     </div>
 
     <div class="form-group">
