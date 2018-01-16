@@ -49,10 +49,10 @@ component accessors=true output=false persistent=false {
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
   public array function activities () {
-    return new Activities().find(where = { challengeID = getID() });
+    return new Activities().find(where = { challenge_id = getID() });
   }
 
   public array function activityTypes () {
-    return new ActivityTypes().find(where = { challengeID = getID() })
+    return new ActivityTypes().find(where = { challenge_id = getID() })
   }
 }

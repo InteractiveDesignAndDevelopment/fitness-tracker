@@ -61,7 +61,7 @@ component accessors=true output=false persistent=false {
   }
 
   public component function current() {
-    currentChallenge = this.find(where = { isCurrent = true })
+    currentChallenge = this.find(where = { is_current = true });
     if (1 == ArrayLen(currentChallenge)) {
       return currentChallenge[1];
     } else {
