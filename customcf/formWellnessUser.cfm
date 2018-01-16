@@ -38,7 +38,7 @@
     </div>
 
     <div>
-      <input class="btn btn-primary" type="submit" name="Submit" value="Register">
+      <input class="btn btn-primary" type="submit" name="Submit" value="Register User">
     </div>
   </form>
 

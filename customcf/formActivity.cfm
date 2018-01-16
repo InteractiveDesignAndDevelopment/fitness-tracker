@@ -75,7 +75,7 @@
     </div>
 
     <div>
-      <input type="submit" name="Submit" value="Record activity">
+      <input class="btn btn-primary" type="submit" name="Submit" value="Record Activity">
     </div>
 
   </form>
