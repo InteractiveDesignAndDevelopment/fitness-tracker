@@ -83,19 +83,24 @@
   <script>
     (function() {
       var $activity_date = $('##activity_date');
-      var $activity_dateTimePicker = $('##activity_date-datepicker');
+      var $activity_date_dateTimePicker = $('##activity_date-datepicker');
       var $user_id = $('##user_id');
       var $challenge_id = $('##challenge_id');
       var $activity_type_id = $('##activity_type_id');
 
-      var onChangeactivity_dateTimePicker = function() {
-        var v = $activity_dateTimePicker.data('DateTimePicker').date();
+      $activity_date_dateTimePicker.datetimepicker({
+        format: 'YYYY-MM-DD',
+        inline: true
+      });
+
+      var onChangeActivityDateDateTimePicker = function() {
+        var v = $activity_date_dateTimePicker.data('DateTimePicker').date();
         var m = moment(v);
         var f = m.format('YYYY-MM-DD');
         $activity_date.val(f);
       }
 
-      $activity_dateTimePicker.on('dp.change', onChangeactivity_dateTimePicker);
+      $activity_date_dateTimePicker.on('dp.change', onChangeActivityDateDateTimePicker);
 
       $(function () {
         // Set the "bootstrap" theme as the default theme for all Select2
@@ -119,12 +124,7 @@
           width: null
         });
 
-        $activity_dateTimePicker.datetimepicker({
-          format: 'YYYY-MM-DD',
-          inline: true
-        });
-
-        onChangeactivity_dateTimePicker();
+        onChangeActivityDateDateTimePicker();
       });
     })();
   </script>
