@@ -79,14 +79,6 @@ component accessors=true output=false persistent=false {
 
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
-  // private boolean function booleanToInt(required boolean b) {
-  //   return b ? 1 : 0;
-  // }
-  //
-  // private numeric function intToBoolean(required numeric i) {
-  //   return 1 == i;
-  // }
-
   private array function challengesQuerytoChallengeArray(required query challengesQuery) {
     var challengeArray = [];
     for (row in challengesQuery) {
