@@ -139,14 +139,14 @@ component accessors=true output=false persistent=false {
       WriteOutput('   :last_name,');
       WriteOutput('   :user_type_id');
       WriteOutput(' )');
-    }
+    };
 
     var params = {
       email        = this.getEmail(),
       first_name   = this.getFirstName(),
       last_name    = this.getLastName(),
       user_type_id = this.getUserTypeID()
-    }
+    };
 
     try {
       var results = queryExecute(sql, params, { datasource = 'dsnWellness' });
