@@ -81,12 +81,6 @@
   </form>
 
   <script>
-    // Set the "bootstrap" theme as the default theme for all Select2
-    // widgets.
-    //
-    // @see https://github.com/select2/select2/issues/2927
-    $.fn.select2.defaults.set('theme', 'bootstrap');
-
     (function() {
       var $activity_date = $('##activity_date');
       var $activity_dateTimePicker = $('##activity_date-datepicker');
@@ -101,29 +95,35 @@
         $activity_date.val(f);
       }
 
-      $user_id.select2({
-        placeholder: 'Select your email address',
-        width: null
-      });
-
-      $challenge_id.select2({
-        placeholder: 'Select a challenge',
-        width: null
-      });
-
-      $activity_type_id.select2({
-        placeholder: 'Select an activity type',
-        width: null
-      });
-
-      $activity_dateTimePicker.datetimepicker({
-        format: 'YYYY-MM-DD',
-        inline: true
-      });
-
       $activity_dateTimePicker.on('dp.change', onChangeactivity_dateTimePicker);
 
       $(function () {
+        // Set the "bootstrap" theme as the default theme for all Select2
+        // widgets.
+        //
+        // @see https://github.com/select2/select2/issues/2927
+        $.fn.select2.defaults.set('theme', 'bootstrap');
+
+        $user_id.select2({
+          placeholder: 'Select your email address',
+          width: null
+        });
+
+        $challenge_id.select2({
+          placeholder: 'Select a challenge',
+          width: null
+        });
+
+        $activity_type_id.select2({
+          placeholder: 'Select an activity type',
+          width: null
+        });
+
+        $activity_dateTimePicker.datetimepicker({
+          format: 'YYYY-MM-DD',
+          inline: true
+        });
+
         onChangeactivity_dateTimePicker();
       });
     })();

@@ -92,44 +92,50 @@
   </form>
 
   <script>
-    // Set the "bootstrap" theme as the default theme for all Select2
-    // widgets.
-    //
-    // @see https://github.com/select2/select2/issues/2927
-    $.fn.select2.defaults.set('theme', 'bootstrap');
 
-    $('##user_id').select2({
-      placeholder: 'Select an email address',
-      width: null
-    });
+    (function(){
+      // copy Bootstrap validation states to Select2 dropdown
+      //
+      // add .has-waring, .has-error, .has-succes to the Select2 dropdown
+      // (was ##select2-drop in Select2 v3.x, in Select2 v4 can be selected via
+      // body > .select2-container) if _any_ of the opened Select2's parents
+      // has one of these forementioned classes (YUCK! ;-))
+      $( ".select2-control" ).on( "select2:open", function() {
+        if ( $( this ).parents( "[class*='has-']" ).length ) {
+          var classNames = $( this ).parents( "[class*='has-']" )[ 0 ].className.split( /\s+/ );
 
-    $('##challenge_id').select2({
-      placeholder: 'Select a challenge',
-      width: null
-    });
-
-    $('##activity_type_id').select2({
-      placeholder: 'Select an activity type',
-      width: null
-    });
-
-    // copy Bootstrap validation states to Select2 dropdown
-    //
-    // add .has-waring, .has-error, .has-succes to the Select2 dropdown
-    // (was ##select2-drop in Select2 v3.x, in Select2 v4 can be selected via
-    // body > .select2-container) if _any_ of the opened Select2's parents
-    // has one of these forementioned classes (YUCK! ;-))
-    $( ".select2-control" ).on( "select2:open", function() {
-      if ( $( this ).parents( "[class*='has-']" ).length ) {
-        var classNames = $( this ).parents( "[class*='has-']" )[ 0 ].className.split( /\s+/ );
-
-        for ( var i = 0; i < classNames.length; ++i ) {
-          if ( classNames[ i ].match( "has-" ) ) {
-            $( "body > .select2-container" ).addClass( classNames[ i ] );
+          for ( var i = 0; i < classNames.length; ++i ) {
+            if ( classNames[ i ].match( "has-" ) ) {
+              $( "body > .select2-container" ).addClass( classNames[ i ] );
+            }
           }
         }
-      }
-    });
+      });
+
+      $(function() {
+        // Set the "bootstrap" theme as the default theme for all Select2
+        // widgets.
+        //
+        // @see https://github.com/select2/select2/issues/2927
+        $.fn.select2.defaults.set('theme', 'bootstrap');
+
+        $('##user_id').select2({
+          placeholder: 'Select an email address',
+          width: null
+        });
+
+        $('##challenge_id').select2({
+          placeholder: 'Select a challenge',
+          width: null
+        });
+
+        $('##activity_type_id').select2({
+          placeholder: 'Select an activity type',
+          width: null
+        });
+      });
+
+    })();
   </script>
 
 </cfoutput>
