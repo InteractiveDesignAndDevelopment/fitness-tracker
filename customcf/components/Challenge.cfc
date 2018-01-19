@@ -6,7 +6,8 @@
  **/
 component accessors=true output=false persistent=false {
   property id;
-  property isCurrent;
+  property isDefault;
+  property isOpen;
   property name;
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -27,8 +28,18 @@ component accessors=true output=false persistent=false {
         setID(s.id);
       }
 
-      if (StructKeyExists(s, 'isCurrent')) {
-        setIsCurrent(1 == s.isCurrent);
+      if (StructKeyExists(s, 'is_default')) {
+        if (IsBoolean(s.is_default)) {
+          s.is_default = boolToInt(s.is_default);
+        }
+        setIsDefault(s.is_default);
+      }
+
+      if (StructKeyExists(s, 'is_open')) {
+        if (IsBoolean(s.is_open)) {
+          s.is_open = boolToInt(s.is_open);
+        }
+        setIsOpen(s.is_open);
       }
 
       if (StructKeyExists(s, 'name')) {
@@ -55,4 +66,31 @@ component accessors=true output=false persistent=false {
   public array function activityTypes () {
     return new ActivityTypes().find(where = { challenge_id = getID() });
   }
+
+  public boolean function isDefault () {
+    return 1 == this.getIsDefault();
+  }
+
+  public boolen function isOpen () {
+    return 1 == this.getIsOpen();
+  }
+
+  /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  ██████  ██████  ██ ██    ██  █████  ████████ ███████
+  ██   ██ ██   ██ ██ ██    ██ ██   ██    ██    ██
+  ██████  ██████  ██ ██    ██ ███████    ██    █████
+  ██      ██   ██ ██  ██  ██  ██   ██    ██    ██
+  ██      ██   ██ ██   ████   ██   ██    ██    ███████
+
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+  private numeric function boolToInt(required boolean b) {
+    return b ? 1 : 0;
+  }
+
+  private boolean function intToBool(required numeric i) {
+    return 1 == i;
+  }
+
 }

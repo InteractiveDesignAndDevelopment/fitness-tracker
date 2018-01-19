@@ -8,6 +8,7 @@
 component accessors=true output=false persistent=false {
 
   property id;
+  property isEnabled;
   property name;
 
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -29,12 +30,33 @@ component accessors=true output=false persistent=false {
         setID(s.id);
       }
 
+      if (StructKeyExists(s, 'isEnabled')) {
+        if (IsBoolean(s.isEnabled)) {
+          s.isEnabled = s.isEnabled ? 1 : 0;
+        }
+        setIsEnabled(s.isEnabled);
+      }
+
       if (StructKeyExists(s, 'name')) {
         setName(s.name);
       }
     }
 
     return this;
+  }
+
+  /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  ██████  ██    ██ ██████  ██      ██  ██████
+  ██   ██ ██    ██ ██   ██ ██      ██ ██
+  ██████  ██    ██ ██████  ██      ██ ██
+  ██      ██    ██ ██   ██ ██      ██ ██
+  ██       ██████  ██████  ███████ ██  ██████
+
+  =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+  public boolean function isEnabled() {
+    return 1 == this.getIsEnabled();
   }
 
 }

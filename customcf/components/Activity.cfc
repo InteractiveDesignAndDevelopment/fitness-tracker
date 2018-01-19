@@ -75,6 +75,10 @@ component accessors=true output=false persistent=false {
     }
   }
 
+  public component function user() {
+    return new User(this.getUserID());
+  }
+
   /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
   ██████  ██████  ██ ██    ██  █████  ████████ ███████

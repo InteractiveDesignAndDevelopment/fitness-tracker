@@ -69,25 +69,34 @@ component accessors=true output=false persistent=false {
   public numeric function sum() {
     var sql = '';
     var params = {};
+    var where = {};
+
+    if (StructKeyExists(arguments, 'where')) {
+      where = arguments.where;
+    }
+
+    // WriteDump(arguments);
 
     savecontent variable='sql' {
       WriteOutput(' SELECT SUM(measure) AS sum_measure');
       WriteOutput('   FROM activities');
 
-      if (StructKeyExists(arguments, 'where')) {
+      if (!StructIsEmpty(where)) {
         WriteOutput(' WHERE 1=1');
 
-        if (StructKeyExists(arguments.where, 'challenge_id')) {
+        if (StructKeyExists(where, 'challenge_id')) {
           WriteOutput(' AND activities.challenge_id = :challenge_id');
           params.challenge_id = arguments.where.challenge_id;
         }
 
-        if (StructKeyExists(arguments.where, 'user_id')) {
+        if (StructKeyExists(where, 'user_id')) {
           WriteOutput(' AND activities.user_id = :user_id');
           params.user_id = arguments.where.user_id;
         }
       }
     };
+
+    // WriteDump(sql);
 
     results = queryExecute(sql, params, { datasource = 'dsnWellness' });
 

@@ -10,7 +10,6 @@
       First Name = #User.getFirstName()#<br>
       Last Name = #User.getLastName()#<br>
       Email = #User.getEmail()#<br>
-      Type = #User.userType().getName()#
     </p>
   <cfelseif ! User.isUnique()>
     <p style="color: red;">

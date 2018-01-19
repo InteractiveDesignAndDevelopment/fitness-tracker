@@ -65,6 +65,10 @@ component Users accessors=true output=false persistent=false {
     return this;
   }
 
+  public function first() {
+    return this.toArray()[1];
+  }
+
   public function toArray() {
     return this.usersArray;
   }

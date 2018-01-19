@@ -11,23 +11,23 @@
   include '_functions.cfm';
 
   Users = createObject('component', 'components.Users');
-  allUsers = Users.find().toArray();
+  selectableUsers = Users.find().toArray();
   Challenges = createObject('component', 'components.Challenges');
-  allChallenges = Challenges.find().toArray();
+  selectableChallenges = Challenges.find().toArray();
   ActivityTypes = createObject('component', 'components.ActivityTypes');
-  allActivityTypes = ActivityTypes.find().toArray();
+  selectableActivityTypes = ActivityTypes.find( where = { is_enabled = true } ).toArray();
 </cfscript>
 
 <cfoutput>
 
-  <form action="./activity-recorded.cfm" method="post">
+  <form action="./add-activity-action.cfm" method="post">
 
     <div class="form-group">
       <label for="user_id">Email address</label>
       <select class="form-control" id="user_id" name="user_id" required>
         <option></option>
-        <cfloop array="#allUsers#" index="user">
-          <option value="#user.getID()#" #selectIfSingle(allUsers)#>#user.getEmail()#</option>
+        <cfloop array="#selectableUsers#" index="user">
+          <option value="#user.getID()#" #selectIfSingle(selectableUsers)#>#user.getEmail()#</option>
         </cfloop>
       </select>
       <p class="help-block">
@@ -39,8 +39,8 @@
       <label for="challenge_id">Challenge</label>
       <select class="form-control" id="challenge_id" name="challenge_id" required>
         <option></option>
-        <cfloop array="#allChallenges#" index="challenge">
-          <option value="#challenge.getID()#" #selectIfSingle(allChallenges)#>#challenge.getName()#</option>
+        <cfloop array="#selectableChallenges#" index="challenge">
+          <option value="#challenge.getID()#" #selectIfTrue(challenge.isDefault())# #selectIfSingle(selectableChallenges)#>#challenge.getName()#</option>
         </cfloop>
       </select>
     </div>
@@ -49,14 +49,14 @@
       <label for="activity_type_id">Activity Type</label>
       <select class="form-control" id="activity_type_id" name="activity_type_id" required>
         <option></option>
-        <cfloop array="#allActivityTypes#" index="activityType">
-          <option value="#activityType.getID()#" #selectIfSingle(allActivityTypes)#>#activityType.getName()#</option>
+        <cfloop array="#selectableActivityTypes#" index="activityType">
+          <option value="#activityType.getID()#" #selectIfSingle(selectableActivityTypes)#>#activityType.getName()#</option>
         </cfloop>
       </select>
     </div>
 
     <div class="form-group">
-      <label for="Measure">How many</label>
+      <label for="Measure">Minutes you did of this activity</label>
       <input class="form-control" type="number" id="measure" name="measure" required>
     </div>
 

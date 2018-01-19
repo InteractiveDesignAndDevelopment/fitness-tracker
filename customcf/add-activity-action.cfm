@@ -29,7 +29,7 @@
 
     <p>
       <!--- FIXME: This can't work with multiple activity types --->
-      Congratulations, #User.getFirstName()#. You have completed #NumberFormat(User.sumActivity(), ',')# total #ActivityType.getName()#.
+      Congratulations, #User.getFirstName()#. You have completed #NumberFormat(User.sumActivity(where = { challenge_id = form.challenge_id }), ',')# minutes of exercise.
     </p>
   <cfelse>
     <h2>An error occurred and your activty was not saved.</h2>

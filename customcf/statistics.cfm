@@ -48,7 +48,7 @@
 
   <h2>Individual Statistics</h2>
 
-  <form action="./view-statistics-by-user.cfm" method="post">
+  <form action="./statistics-by-user.cfm" method="post">
 
     <div class="form-group">
       <label for="user_id">Email address</label>
@@ -65,7 +65,7 @@
 
     <div class="form-group">
       <label for="challenge_id">Challenge</label>
-      <select class="form-control" id="challenge_id" name="challenge_id">
+      <select class="form-control" id="challenge_id" name="challenge_id" required>
         <option></option>
         <cfloop array="#allChallenges#" index="challenge">
           <option value="#challenge.getID()#" #selectIfSingle(allChallenges)#>#challenge.getName()#</option>
@@ -75,7 +75,7 @@
 
     <div class="form-group">
       <label for="activity_type_id">Activity type</label>
-      <select class="form-control" id="activity_type_id" name="activity_type_id">
+      <select class="form-control" id="activity_type_id" name="activity_type_id" required>
         <option></option>
         <cfloop array="#allActivityTypes#" index="activityType">
           <option value="#activityType.getID()#" #selectIfSingle(allActivityTypes)#>#activityType.getName()#</option>

@@ -23,29 +23,37 @@ component accessors=true output=false persistent=false {
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
   public component function init () {
-    if (1 == arrayLen(arguments) && IsStruct(arguments[1])) {
-      var s = arguments[1];
+    var s = {};
 
-      if (StructKeyExists(s, 'email')) {
-        setEmail(s.email);
+    if (1 == arrayLen(arguments)) {
+      if (IsNumeric(arguments[1])) {
+        return new Users().find(where = { id = arguments[1] }).first();
       }
-
-      if (StructKeyExists(s, 'first_name')) {
-        setFirstName(s.first_name);
-      }
-
-      if (StructKeyExists(s, 'id')) {
-        setID(s.id);
-      }
-
-      if (StructKeyExists(s, 'last_name')) {
-        setLastName(s.last_name);
-      }
-
-      if (StructKeyExists(s, 'user_type_id')) {
-        setUserTypeID(s.user_type_id);
+      if (IsStruct(arguments[1])) {
+        s = arguments[1];
       }
     }
+
+    if (StructKeyExists(s, 'email')) {
+      setEmail(s.email);
+    }
+
+    if (StructKeyExists(s, 'first_name')) {
+      setFirstName(s.first_name);
+    }
+
+    if (StructKeyExists(s, 'id')) {
+      setID(s.id);
+    }
+
+    if (StructKeyExists(s, 'last_name')) {
+      setLastName(s.last_name);
+    }
+
+    if (StructKeyExists(s, 'user_type_id')) {
+      setUserTypeID(s.user_type_id);
+    }
+
     return this;
   }
 
@@ -58,6 +66,10 @@ component accessors=true output=false persistent=false {
   ██       ██████  ██████  ███████ ██  ██████
 
   =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+
+  public string function fullName() {
+    return '#this.getFirstName()# #this.getLastName()#';
+  }
 
   public boolean function isUnique() {
     var Users = createObject('component', 'Users');
@@ -72,6 +84,10 @@ component accessors=true output=false persistent=false {
     }
   }
 
+  public string function sortName() {
+    return '#this.getLastName()#, #this.getFirstName()# (#this.getID()#)';
+  }
+
   public numeric function sumActivity() {
     var Activities = createObject('component', 'Activities');
     var where = {
@@ -82,7 +98,7 @@ component accessors=true output=false persistent=false {
       StructAppend(where, arguments.where, false);
     }
 
-    return Activities.sum(where);
+    return Activities.sum(where = where);
   }
 
   public component function type() {

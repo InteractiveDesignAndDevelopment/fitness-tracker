@@ -44,13 +44,22 @@ component accessors=true output=false persistent=false {
     var params = {};
     var results = queryNew('');
     var sql = '';
+    var where = {};
+
+    if (StructKeyExists(arguments, 'where')) {
+      where = arguments.where;
+    }
+
+    if (StructKeyExists(where, 'is_enabled') && IsBoolean(where.is_enabled)) {
+        where.is_enabled = where.is_enabled ? '1' : '0';
+    }
 
     savecontent variable='sql' {
       WriteOutput(' SELECT activity_types.*');
       WriteOutput('   FROM activity_types');
-      if (StructKeyExists(arguments, 'where')) {
+      if (! StructIsEmpty(where)) {
         WriteOutput(' WHERE 1=1');
-        if (StructKeyExists(arguments.where, 'challenge_id')) {
+        if (StructKeyExists(where, 'challenge_id')) {
           WriteOutput('    AND activity_types.id IN (');
           WriteOutput(' SELECT DISTINCT activities.activity_type_id');
           WriteOutput('   FROM activities');
@@ -59,7 +68,12 @@ component accessors=true output=false persistent=false {
           WriteOutput(' )');
           params.challenge_id = arguments.where.challenge_id;
         }
+        if (StructKeyExists(where, 'is_enabled')) {
+          WriteOutput(' AND is_enabled = :is_enabled');
+          params.is_enabled = where.is_enabled;
+        }
       }
+      WriteOutput(' ORDER BY activity_types.name');
     }
 
     results = queryExecute(sql, params, { datasource = 'dsnWellness' });

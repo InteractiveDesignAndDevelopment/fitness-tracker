@@ -57,12 +57,12 @@
   ORDER BY activity_month_day
 </cfquery>
 
-<cfquery name="getActivityType" datasource="dsnWellness">
+<!--- <cfquery name="getActivityType" datasource="dsnWellness">
   SELECT activity_types.id,
          activity_types.name
     FROM activity_types
    WHERE activity_types.id = #Form.activity_type_id#
-</cfquery>
+</cfquery> --->
 
 <cfquery name="getSumOfActivitiesByUserID" datasource="dsnWellness">
   SELECT SUM(activities.measure) AS sum_of_measures

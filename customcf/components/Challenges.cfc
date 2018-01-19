@@ -36,22 +36,8 @@ component accessors=true output=false persistent=false {
     var sql = '';
 
     savecontent variable='sql' {
-      WriteOutput(' SELECT challenges.*');
-      WriteOutput('   FROM challenges');
-
-      // if (StructKeyExists(arguments, 'where')) {
-      //   WriteOutput(' WHERE 1=1');
-      //
-      //   if (StructKeyExists(arguments.where, 'isCurrent')) {
-      //     WriteOutput(' AND Challenge.isCurrent = :isCurrent');
-      //     params.isCurrent = IsNumeric(arguments.where.isCurrent) ?
-      //       arguments.where.isCurrent :
-      //       booleanToInt(arguments.where.isCurrent);
-      //     }
-      //   }
-      //
-      // }
-
+      WriteOutput('   SELECT challenges.*');
+      WriteOutput('     FROM challenges');
       WriteOutput(' ORDER BY challenges.name');
     }
 
