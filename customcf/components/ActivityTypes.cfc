@@ -68,6 +68,10 @@ component accessors=true output=false persistent=false {
           WriteOutput(' )');
           params.challenge_id = arguments.where.challenge_id;
         }
+        if (structKeyExists(where, 'id')) {
+          writeOutput(' AND id = :id');
+          params.id = where.id;
+        }
         if (StructKeyExists(where, 'is_enabled')) {
           WriteOutput(' AND is_enabled = :is_enabled');
           params.is_enabled = where.is_enabled;

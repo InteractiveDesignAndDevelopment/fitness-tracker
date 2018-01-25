@@ -10,6 +10,7 @@
   // WriteDump(Challenge);
   ActivityTypes = createObject('component', 'components.ActivityTypes');
   ActivityType = ActivityTypes.find(where = { id = Form.activity_type_id }).toArray()[1];
+  // writeDump(form);
   // WriteDump(ActivityType);
 
   Activity = createObject('component', 'components.Activity').init(form);
